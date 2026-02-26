@@ -1,0 +1,7 @@
+fn main() {
+    bool a = true;
+    bool b = false;
+    if (a && !b) {
+        return true;
+    }
+}
