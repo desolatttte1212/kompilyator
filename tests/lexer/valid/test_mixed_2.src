@@ -1,0 +1,11 @@
+﻿Main program
+fn main() {
+    bool running = true;
+    int count = 0;
+    while (running && count < 10) {
+        count = count + 1;
+        if (count == 5) {
+            running = false;
+        }
+    }
+    return 0;

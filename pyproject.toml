@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "minicompiler"
+version = "0.1.0"
+description = "A simplified C-like compiler implementation (Sprint 1: Lexer)"
+requires-python = ">=3.8"
+dependencies = []
+
+[project.scripts]
+minicomp = "src.lexer.main:main"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["src*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"

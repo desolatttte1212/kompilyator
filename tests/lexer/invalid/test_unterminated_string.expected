@@ -1,0 +1,5 @@
+﻿1:2 IDENTIFIER "string"
+1:9 IDENTIFIER "s"
+1:11 ASSIGN "="
+1:13 STRING_LITERAL ""hello world;" hello world
+1:26 EOF ""

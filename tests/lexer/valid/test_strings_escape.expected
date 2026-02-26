@@ -1,0 +1,6 @@
+﻿1:2 STRING_LITERAL ""line1\nline2"" line1
+line2
+2:1 STRING_LITERAL ""tab\there"" tab	here
+3:1 STRING_LITERAL ""quote \"inside\""" quote "inside"
+4:1 STRING_LITERAL ""backslash \\"" backslash \
+4:15 EOF ""
