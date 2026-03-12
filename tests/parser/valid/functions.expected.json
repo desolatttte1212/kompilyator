@@ -1,0 +1,109 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "return_type": "int",
+      "name": "add",
+      "parameters": [
+        {
+          "type": "Param",
+          "param_type": "int",
+          "name": "a",
+          "line": 1,
+          "column": 8
+        },
+        {
+          "type": "Param",
+          "param_type": "int",
+          "name": "b",
+          "line": 1,
+          "column": 15
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "IdentifierExpr",
+                "name": "a",
+                "line": 2,
+                "column": 12
+              },
+              "right": {
+                "type": "IdentifierExpr",
+                "name": "b",
+                "line": 2,
+                "column": 16
+              },
+              "line": 2,
+              "column": 12
+            },
+            "line": 2,
+            "column": 5
+          }
+        ],
+        "line": 1,
+        "column": 28
+      },
+      "line": 1,
+      "column": 1
+    },
+    {
+      "type": "FunctionDecl",
+      "return_type": "void",
+      "name": "main",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "result",
+            "initializer": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "IdentifierExpr",
+                "name": "add",
+                "line": 6,
+                "column": 18
+              },
+              "arguments": [
+                {
+                  "type": "LiteralExpr",
+                  "value": 2,
+                  "literal_type": "int",
+                  "line": 6,
+                  "column": 22
+                },
+                {
+                  "type": "LiteralExpr",
+                  "value": 3,
+                  "literal_type": "int",
+                  "line": 6,
+                  "column": 25
+                }
+              ],
+              "line": 6,
+              "column": 18
+            },
+            "line": 6,
+            "column": 5
+          }
+        ],
+        "line": 5,
+        "column": 18
+      },
+      "line": 5,
+      "column": 1
+    }
+  ],
+  "line": 1,
+  "column": 1
+}

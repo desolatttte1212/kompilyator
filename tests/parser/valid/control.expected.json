@@ -1,0 +1,213 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "return_type": "void",
+      "name": "main",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "x",
+            "initializer": {
+              "type": "LiteralExpr",
+              "value": 0,
+              "literal_type": "int",
+              "line": 2,
+              "column": 13
+            },
+            "line": 2,
+            "column": 5
+          },
+          {
+            "type": "IfStmt",
+            "condition": {
+              "type": "BinaryExpr",
+              "operator": ">",
+              "left": {
+                "type": "IdentifierExpr",
+                "name": "x",
+                "line": 3,
+                "column": 9
+              },
+              "right": {
+                "type": "LiteralExpr",
+                "value": 0,
+                "literal_type": "int",
+                "line": 3,
+                "column": 13
+              },
+              "line": 3,
+              "column": 9
+            },
+            "then_branch": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "IdentifierExpr",
+                      "name": "x",
+                      "line": 4,
+                      "column": 9
+                    },
+                    "operator": "=",
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "-",
+                      "left": {
+                        "type": "IdentifierExpr",
+                        "name": "x",
+                        "line": 4,
+                        "column": 13
+                      },
+                      "right": {
+                        "type": "LiteralExpr",
+                        "value": 1,
+                        "literal_type": "int",
+                        "line": 4,
+                        "column": 17
+                      },
+                      "line": 4,
+                      "column": 13
+                    },
+                    "line": 4,
+                    "column": 9
+                  },
+                  "line": 4,
+                  "column": 9
+                }
+              ],
+              "line": 3,
+              "column": 16
+            },
+            "line": 3,
+            "column": 5,
+            "else_branch": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "IdentifierExpr",
+                      "name": "x",
+                      "line": 6,
+                      "column": 9
+                    },
+                    "operator": "=",
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "+",
+                      "left": {
+                        "type": "IdentifierExpr",
+                        "name": "x",
+                        "line": 6,
+                        "column": 13
+                      },
+                      "right": {
+                        "type": "LiteralExpr",
+                        "value": 1,
+                        "literal_type": "int",
+                        "line": 6,
+                        "column": 17
+                      },
+                      "line": 6,
+                      "column": 13
+                    },
+                    "line": 6,
+                    "column": 9
+                  },
+                  "line": 6,
+                  "column": 9
+                }
+              ],
+              "line": 5,
+              "column": 12
+            }
+          },
+          {
+            "type": "WhileStmt",
+            "condition": {
+              "type": "BinaryExpr",
+              "operator": "<",
+              "left": {
+                "type": "IdentifierExpr",
+                "name": "x",
+                "line": 8,
+                "column": 12
+              },
+              "right": {
+                "type": "LiteralExpr",
+                "value": 10,
+                "literal_type": "int",
+                "line": 8,
+                "column": 16
+              },
+              "line": 8,
+              "column": 12
+            },
+            "body": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "IdentifierExpr",
+                      "name": "x",
+                      "line": 9,
+                      "column": 9
+                    },
+                    "operator": "=",
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "+",
+                      "left": {
+                        "type": "IdentifierExpr",
+                        "name": "x",
+                        "line": 9,
+                        "column": 13
+                      },
+                      "right": {
+                        "type": "LiteralExpr",
+                        "value": 1,
+                        "literal_type": "int",
+                        "line": 9,
+                        "column": 17
+                      },
+                      "line": 9,
+                      "column": 13
+                    },
+                    "line": 9,
+                    "column": 9
+                  },
+                  "line": 9,
+                  "column": 9
+                }
+              ],
+              "line": 8,
+              "column": 20
+            },
+            "line": 8,
+            "column": 5
+          }
+        ],
+        "line": 1,
+        "column": 18
+      },
+      "line": 1,
+      "column": 1
+    }
+  ],
+  "line": 1,
+  "column": 1
+}

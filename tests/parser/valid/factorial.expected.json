@@ -1,0 +1,199 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "return_type": "int",
+      "name": "factorial",
+      "parameters": [
+        {
+          "type": "Param",
+          "param_type": "int",
+          "name": "n",
+          "line": 1,
+          "column": 14
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "result",
+            "initializer": {
+              "type": "LiteralExpr",
+              "value": 1,
+              "literal_type": "int",
+              "line": 2,
+              "column": 18
+            },
+            "line": 2,
+            "column": 5
+          },
+          {
+            "type": "WhileStmt",
+            "condition": {
+              "type": "BinaryExpr",
+              "operator": ">",
+              "left": {
+                "type": "IdentifierExpr",
+                "name": "n",
+                "line": 3,
+                "column": 12
+              },
+              "right": {
+                "type": "LiteralExpr",
+                "value": 0,
+                "literal_type": "int",
+                "line": 3,
+                "column": 16
+              },
+              "line": 3,
+              "column": 12
+            },
+            "body": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "IdentifierExpr",
+                      "name": "result",
+                      "line": 4,
+                      "column": 9
+                    },
+                    "operator": "=",
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "*",
+                      "left": {
+                        "type": "IdentifierExpr",
+                        "name": "result",
+                        "line": 4,
+                        "column": 18
+                      },
+                      "right": {
+                        "type": "IdentifierExpr",
+                        "name": "n",
+                        "line": 4,
+                        "column": 27
+                      },
+                      "line": 4,
+                      "column": 18
+                    },
+                    "line": 4,
+                    "column": 9
+                  },
+                  "line": 4,
+                  "column": 9
+                },
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "IdentifierExpr",
+                      "name": "n",
+                      "line": 5,
+                      "column": 9
+                    },
+                    "operator": "=",
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "-",
+                      "left": {
+                        "type": "IdentifierExpr",
+                        "name": "n",
+                        "line": 5,
+                        "column": 13
+                      },
+                      "right": {
+                        "type": "LiteralExpr",
+                        "value": 1,
+                        "literal_type": "int",
+                        "line": 5,
+                        "column": 17
+                      },
+                      "line": 5,
+                      "column": 13
+                    },
+                    "line": 5,
+                    "column": 9
+                  },
+                  "line": 5,
+                  "column": 9
+                }
+              ],
+              "line": 3,
+              "column": 19
+            },
+            "line": 3,
+            "column": 5
+          },
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "IdentifierExpr",
+              "name": "result",
+              "line": 7,
+              "column": 12
+            },
+            "line": 7,
+            "column": 5
+          }
+        ],
+        "line": 1,
+        "column": 27
+      },
+      "line": 1,
+      "column": 1
+    },
+    {
+      "type": "FunctionDecl",
+      "return_type": "void",
+      "name": "main",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "x",
+            "initializer": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "IdentifierExpr",
+                "name": "factorial",
+                "line": 11,
+                "column": 13
+              },
+              "arguments": [
+                {
+                  "type": "LiteralExpr",
+                  "value": 5,
+                  "literal_type": "int",
+                  "line": 11,
+                  "column": 23
+                }
+              ],
+              "line": 11,
+              "column": 13
+            },
+            "line": 11,
+            "column": 5
+          }
+        ],
+        "line": 10,
+        "column": 18
+      },
+      "line": 10,
+      "column": 1
+    }
+  ],
+  "line": 1,
+  "column": 1
+}
