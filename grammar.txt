@@ -1,0 +1,89 @@
+(* ============================================================= *)
+(* MiniCompiler Formal Grammar Specification (Sprint 2)          *)
+(* Notation: Extended Backus-Naur Form (EBNF)                    *)
+(* ============================================================= *)
+
+(* === Start Symbol === *)
+Program        ::= { Declaration } EOF ;
+
+(* === Declarations (GRAM-5) === *)
+Declaration    ::= FunctionDecl | StructDecl | VarDecl ;
+
+FunctionDecl   ::= "fn" Identifier "(" [ Parameters ] ")" [ "=" Type ] Block ;
+StructDecl     ::= "struct" Identifier "{" { VarDecl } "}" ;
+VarDecl        ::= Type Identifier [ "=" Expression ] ";" ;
+
+Parameters     ::= Parameter { "," Parameter } ;
+Parameter      ::= Type Identifier ;
+
+(* === Statements (GRAM-4) === *)
+Statement      ::= Block
+                 | IfStmt
+                 | WhileStmt
+                 | ForStmt
+                 | ReturnStmt
+                 | ExprStmt
+                 | VarDecl ;
+
+Block          ::= "{" { Statement } "}" ;
+IfStmt         ::= "if" "(" Expression ")" Statement [ "else" Statement ] ;
+WhileStmt      ::= "while" "(" Expression ")" Statement ;
+ForStmt        ::= "for" "(" [ Expression ] ";" [ Expression ] ";" [ Expression ] ")" Statement ;
+ReturnStmt     ::= "return" [ Expression ] ";" ;
+ExprStmt       ::= Expression ";" ;
+
+(* === Expressions (GRAM-3: Precedence lowest to highest) === *)
+
+(* 9. Assignment (Right-associative) *)
+Expression     ::= Assignment ;
+Assignment     ::= LogicalOr { ( "=" ) Assignment } ;
+
+(* 8. Logical OR (Left-associative) *)
+LogicalOr      ::= LogicalAnd { "||" LogicalAnd } ;
+
+(* 7. Logical AND (Left-associative) *)
+LogicalAnd     ::= Equality { "&&" Equality } ;
+
+(* 6. Equality (Non-associative) *)
+Equality       ::= Relational { ( "==" | "!=" ) Relational } ;
+
+(* 5. Relational (Non-associative) *)
+Relational     ::= Additive { ( "<" | "<=" | ">" | ">=" ) Additive } ;
+
+(* 4. Additive (Left-associative) *)
+Additive       ::= Multiplicative { ( "+" | "-" ) Multiplicative } ;
+
+(* 3. Multiplicative (Left-associative) *)
+Multiplicative ::= Unary { ( "*" | "/" | "%" ) Unary } ;
+
+(* 2. Unary Operators *)
+Unary          ::= [ "-" | "!" ] Primary ;
+
+(* 1. Primary Expressions *)
+Primary        ::= Literal
+                 | Identifier
+                 | "(" Expression ")"
+                 | Call ;
+
+Call           ::= Identifier "(" [ Arguments ] ")" ;
+Arguments      ::= Expression { "," Expression } ;
+
+(* === Types & Literals === *)
+Type           ::= "int" | "float" | "bool" | "void" | Identifier ;
+
+Literal        ::= Integer | Float | String | Boolean ;
+
+(* === Terminals (Matching Sprint 1 Tokens) === *)
+Identifier     ::= letter { letter | digit | "_" } ;
+Integer        ::= digit { digit } ;
+Float          ::= digit { digit } "." digit { digit } ;
+String         ::= '"' { character } '"' ;
+Boolean        ::= "true" | "false" ;
+
+(* ============================================================= *)
+(* Operator Precedence & Associativity (GRAM-6)                  *)
+(* ============================================================= *)
+(* Left-associative:  + - * / % && ||                           *)
+(* Right-associative: =                                         *)
+(* Non-associative:   == != < <= > >=                            *)
+(* ============================================================= *)
