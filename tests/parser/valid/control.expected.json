@@ -1,0 +1,142 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "x",
+            "initializer": {
+              "type": "Literal",
+              "literal_type": "int",
+              "value": 0
+            }
+          },
+          {
+            "type": "IfStmt",
+            "condition": {
+              "type": "BinaryExpr",
+              "operator": ">",
+              "left": {
+                "type": "Identifier",
+                "name": "x"
+              },
+              "right": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 0
+              }
+            },
+            "then_branch": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "Identifier",
+                      "name": "x"
+                    },
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "-",
+                      "left": {
+                        "type": "Identifier",
+                        "name": "x"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "literal_type": "int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              ]
+            },
+            "else_branch": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "Identifier",
+                      "name": "x"
+                    },
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "+",
+                      "left": {
+                        "type": "Identifier",
+                        "name": "x"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "literal_type": "int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "WhileStmt",
+            "condition": {
+              "type": "BinaryExpr",
+              "operator": "<",
+              "left": {
+                "type": "Identifier",
+                "name": "x"
+              },
+              "right": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 10
+              }
+            },
+            "body": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "Identifier",
+                      "name": "x"
+                    },
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "+",
+                      "left": {
+                        "type": "Identifier",
+                        "name": "x"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "literal_type": "int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

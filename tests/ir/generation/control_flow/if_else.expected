@@ -1,0 +1,12 @@
+# IR Program
+
+function test: int ()
+test_entry:  # ENTRY
+  t0 = GT 1, 0  # 1 > 0
+  JUMP_IF t0, L_then0  # if condition
+L_else1:
+  RETURN 0  # return value
+L_then0:
+  RETURN 1  # return value
+L_join2:  # JOIN
+  RETURN  # implicit return

@@ -1,0 +1,6 @@
+fn test() = void {
+    int x = 5;
+    if (x) {
+        x = x + 1;
+    }
+}

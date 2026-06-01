@@ -1,0 +1,135 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "name": "factorial",
+      "return_type": "int",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "n",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "result",
+            "initializer": {
+              "type": "Literal",
+              "literal_type": "int",
+              "value": 1
+            }
+          },
+          {
+            "type": "WhileStmt",
+            "condition": {
+              "type": "BinaryExpr",
+              "operator": ">",
+              "left": {
+                "type": "Identifier",
+                "name": "n"
+              },
+              "right": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 0
+              }
+            },
+            "body": {
+              "type": "BlockStmt",
+              "statements": [
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "Identifier",
+                      "name": "result"
+                    },
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "*",
+                      "left": {
+                        "type": "Identifier",
+                        "name": "result"
+                      },
+                      "right": {
+                        "type": "Identifier",
+                        "name": "n"
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "ExprStmt",
+                  "expression": {
+                    "type": "AssignmentExpr",
+                    "target": {
+                      "type": "Identifier",
+                      "name": "n"
+                    },
+                    "value": {
+                      "type": "BinaryExpr",
+                      "operator": "-",
+                      "left": {
+                        "type": "Identifier",
+                        "name": "n"
+                      },
+                      "right": {
+                        "type": "Literal",
+                        "literal_type": "int",
+                        "value": 1
+                      }
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "Identifier",
+              "name": "result"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "x",
+            "initializer": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "factorial"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 5
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

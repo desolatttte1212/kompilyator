@@ -1,0 +1,17 @@
+fn add(int a, int b) = int {
+    return a + b;
+}
+
+fn multiply(int x, int y) = int {
+    return x * y;
+}
+
+fn print_value(int val) = void {
+}
+
+fn main() = void {
+    int result = add(2, 3);
+    int product = multiply(add(1, 2), add(3, 4));
+    print_value(result);
+    int nested = add(multiply(2, 3), multiply(4, 5));
+}

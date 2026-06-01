@@ -1,0 +1,17 @@
+# IR Program
+
+function test: void ()
+test_entry:  # ENTRY
+  STORE [i], 0  # init i
+  JUMP L_while_header0
+L_while_header0:  # LOOP_HEADER
+  t0 = LOAD [i]  # load i
+  t1 = LT t0, 10  # t0 < 10
+  JUMP_IF t1, L_while_body1  # while condition
+L_while_exit2:
+  RETURN
+L_while_body1:  # LOOP_BODY
+  t2 = LOAD [i]  # load i
+  t3 = ADD t2, 1  # t2 + 1
+  STORE [i], t3  # store i
+  JUMP L_while_header0

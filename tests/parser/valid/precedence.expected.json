@@ -1,0 +1,202 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "a",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 1
+              },
+              "right": {
+                "type": "BinaryExpr",
+                "operator": "*",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 3
+                }
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "b",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "*",
+              "left": {
+                "type": "BinaryExpr",
+                "operator": "+",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                }
+              },
+              "right": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 3
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "bool",
+            "name": "c",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "||",
+              "left": {
+                "type": "Literal",
+                "literal_type": "bool",
+                "value": true
+              },
+              "right": {
+                "type": "BinaryExpr",
+                "operator": "&&",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "bool",
+                  "value": false
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "bool",
+                  "value": false
+                }
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "bool",
+            "name": "d",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "&&",
+              "left": {
+                "type": "BinaryExpr",
+                "operator": "<",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                }
+              },
+              "right": {
+                "type": "BinaryExpr",
+                "operator": ">",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 3
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                }
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "e",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "UnaryExpr",
+                "operator": "-",
+                "operand": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                }
+              },
+              "right": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 2
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "x",
+            "initializer": {
+              "type": "Literal",
+              "literal_type": "int",
+              "value": 0
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "y",
+            "initializer": {
+              "type": "Literal",
+              "literal_type": "int",
+              "value": 0
+            }
+          },
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "AssignmentExpr",
+              "target": {
+                "type": "Identifier",
+                "name": "x"
+              },
+              "value": {
+                "type": "AssignmentExpr",
+                "target": {
+                  "type": "Identifier",
+                  "name": "y"
+                },
+                "value": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 5
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

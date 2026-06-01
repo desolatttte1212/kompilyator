@@ -1,0 +1,28 @@
+fn factorial(int n) = int {
+    if (n <= 1) {
+        return 1;
+    } else {
+        return n * factorial(n - 1);
+    }
+}
+
+fn sum(int a, int b) = int {
+    return a + b;
+}
+
+fn main() = void {
+    int x = 5;
+    int y = 10;
+    int result = 0;
+    result = factorial(x);
+    int i = 0;
+    while (i < y) {
+        result = sum(result, i);
+        i = i + 1;
+    }
+    if (result > 100) {
+        result = 100;
+    } else {
+        result = 0;
+    }
+}

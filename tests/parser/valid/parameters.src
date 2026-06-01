@@ -1,0 +1,25 @@
+fn no_params() = void {
+}
+
+fn one_param(int a) = int {
+    return a;
+}
+
+fn two_params(int a, int b) = int {
+    return a + b;
+}
+
+fn many_params(int a, int b, int c, int d, int e) = int {
+    return a + b + c + d + e;
+}
+
+fn mixed_params(int x, float y, bool z) = void {
+}
+
+fn main() = void {
+    no_params();
+    one_param(1);
+    two_params(1, 2);
+    many_params(1, 2, 3, 4, 5);
+    mixed_params(1, 2.5, true);
+}

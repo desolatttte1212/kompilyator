@@ -1,0 +1,15 @@
+{
+  "global": {
+    "main": {
+      "name": "main",
+      "kind": "FUNCTION",
+      "type": "() -> void",
+      "line": 1,
+      "column": 1,
+      "mutable": true,
+      "return_type": "void",
+      "parameters": [],
+      "is_defined": true
+    }
+  }
+}

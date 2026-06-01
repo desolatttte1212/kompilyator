@@ -1,0 +1,64 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "StructDecl",
+      "name": "Point",
+      "fields": [
+        {
+          "type": "VarDeclStmt",
+          "var_type": "int",
+          "name": "x",
+          "initializer": null
+        },
+        {
+          "type": "VarDeclStmt",
+          "var_type": "int",
+          "name": "y",
+          "initializer": null
+        }
+      ]
+    },
+    {
+      "type": "StructDecl",
+      "name": "Rectangle",
+      "fields": [
+        {
+          "type": "VarDeclStmt",
+          "var_type": "int",
+          "name": "width",
+          "initializer": null
+        },
+        {
+          "type": "VarDeclStmt",
+          "var_type": "int",
+          "name": "height",
+          "initializer": null
+        },
+        {
+          "type": "VarDeclStmt",
+          "var_type": "Point",
+          "name": "origin",
+          "initializer": null
+        }
+      ]
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "Point",
+            "name": "p",
+            "initializer": null
+          }
+        ]
+      }
+    }
+  ]
+}

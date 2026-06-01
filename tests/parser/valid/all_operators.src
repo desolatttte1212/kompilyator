@@ -1,0 +1,28 @@
+fn main() = void {
+    // Арифметические
+    int a = 10 + 5;
+    int b = 10 - 5;
+    int c = 10 * 5;
+    int d = 10 / 5;
+    int e = 10 % 3;
+
+    // Унарные
+    int f = -a;
+
+    // Сравнения
+    bool g = a == b;
+    bool h = a != b;
+    bool i = a < b;
+    bool j = a <= b;
+    bool k = a > b;
+    bool l = a >= b;
+
+    // Логические
+    bool m = true && false;
+    bool n = true || false;
+    bool o = !true;
+
+    // Присваивание
+    int x = 0;
+    x = 5;
+}

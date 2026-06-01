@@ -1,0 +1,303 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "name": "no_params",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": []
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "one_param",
+      "return_type": "int",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "a",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "Identifier",
+              "name": "a"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "two_params",
+      "return_type": "int",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "a",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "b",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "b"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "many_params",
+      "return_type": "int",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "a",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "b",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "c",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "d",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "e",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "BinaryExpr",
+                "operator": "+",
+                "left": {
+                  "type": "BinaryExpr",
+                  "operator": "+",
+                  "left": {
+                    "type": "BinaryExpr",
+                    "operator": "+",
+                    "left": {
+                      "type": "Identifier",
+                      "name": "a"
+                    },
+                    "right": {
+                      "type": "Identifier",
+                      "name": "b"
+                    }
+                  },
+                  "right": {
+                    "type": "Identifier",
+                    "name": "c"
+                  }
+                },
+                "right": {
+                  "type": "Identifier",
+                  "name": "d"
+                }
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "e"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "mixed_params",
+      "return_type": "void",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "x",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "y",
+          "param_type": "float"
+        },
+        {
+          "type": "Param",
+          "name": "z",
+          "param_type": "bool"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": []
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "no_params"
+              },
+              "arguments": []
+            }
+          },
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "one_param"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                }
+              ]
+            }
+          },
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "two_params"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                }
+              ]
+            }
+          },
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "many_params"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 3
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 4
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 5
+                }
+              ]
+            }
+          },
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "mixed_params"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 1
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "float",
+                  "value": 2.5
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "bool",
+                  "value": true
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

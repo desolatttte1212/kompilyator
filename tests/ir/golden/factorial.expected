@@ -1,0 +1,21 @@
+# IR Program
+
+function factorial: int (n: int)
+factorial_entry:  # ENTRY
+  t0 = ALLOCA 4  # param n
+  PARAM 0, t1  # load param 0
+  STORE [t0], t1
+  t2 = LOAD [t0]  # load n
+  t3 = LE t2, 1  # t2 <= 1
+  JUMP_IF t3, L_then0  # if condition
+L_else1:
+  t4 = LOAD [t0]  # load n
+  t5 = LOAD [t0]  # load n
+  t6 = SUB t5, 1  # t5 - 1
+  t7 = CALL factorial(t6)  # call factorial
+  t8 = MUL t4, t7  # t4 * t7
+  RETURN t8  # return value
+L_then0:
+  RETURN 1  # return value
+L_join2:  # JOIN
+  RETURN  # implicit return

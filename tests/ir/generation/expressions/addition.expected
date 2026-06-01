@@ -1,0 +1,8 @@
+# IR Program
+
+function test: int ()
+test_entry:  # ENTRY
+  t0 = ADD 5, 3  # 5 + 3
+  STORE [x], t0  # init x
+  t1 = LOAD [x]  # load x
+  RETURN t1  # return value

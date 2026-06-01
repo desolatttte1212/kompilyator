@@ -1,0 +1,8 @@
+# IR Program
+
+function test: int ()
+test_entry:  # ENTRY
+  t0 = MUL 4, 5  # 4 * 5
+  STORE [x], t0  # init x
+  t1 = LOAD [x]  # load x
+  RETURN t1  # return value

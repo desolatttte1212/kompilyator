@@ -1,0 +1,51 @@
+{
+  "global": {
+    "factorial": {
+      "name": "factorial",
+      "kind": "FUNCTION",
+      "type": "(n: int) -> int",
+      "line": 1,
+      "column": 1,
+      "mutable": true,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "n",
+          "type": "int"
+        }
+      ],
+      "is_defined": true
+    },
+    "sum": {
+      "name": "sum",
+      "kind": "FUNCTION",
+      "type": "(a: int, b: int) -> int",
+      "line": 10,
+      "column": 1,
+      "mutable": true,
+      "return_type": "int",
+      "parameters": [
+        {
+          "name": "a",
+          "type": "int"
+        },
+        {
+          "name": "b",
+          "type": "int"
+        }
+      ],
+      "is_defined": true
+    },
+    "main": {
+      "name": "main",
+      "kind": "FUNCTION",
+      "type": "() -> void",
+      "line": 14,
+      "column": 1,
+      "mutable": true,
+      "return_type": "void",
+      "parameters": [],
+      "is_defined": true
+    }
+  }
+}

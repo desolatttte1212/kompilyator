@@ -1,0 +1,23 @@
+# IR Program
+
+function test: void ()
+test_entry:  # ENTRY
+  t0 = GT 1, 0  # 1 > 0
+  JUMP_IF t0, L_then0  # if condition
+L_else1:
+  JUMP L_join2
+L_then0:
+  JUMP L_while_header3
+L_while_header3:  # LOOP_HEADER
+  t1 = LT 1, 2  # 1 < 2
+  JUMP_IF t1, L_while_body4  # while condition
+L_while_body4:  # LOOP_BODY
+  t2 = GT 2, 1  # 2 > 1
+  JUMP_IF t2, L_then6  # if condition
+L_else7:
+  JUMP L_join8
+L_then6:
+  RETURN  # return void
+L_join8:  # JOIN
+L_join2:  # JOIN
+  RETURN

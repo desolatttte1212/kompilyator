@@ -1,0 +1,12 @@
+fn main() = void {
+    int a = 5;
+    float b = 3.14;
+    bool c = true;
+
+    int d = a + 10;
+    float e = b + 2.0;
+    float f = a + b;
+
+    bool g = a > 5;
+    bool h = g && true;
+}

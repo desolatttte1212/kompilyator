@@ -1,0 +1,27 @@
+# IR Program
+
+function sum: int (n: int)
+sum_entry:  # ENTRY
+  t0 = ALLOCA 4  # param n
+  PARAM 0, t1  # load param 0
+  STORE [t0], t1
+  STORE [result], 0  # init result
+  STORE [i], 0  # init i
+  JUMP L_while_header0
+L_while_header0:  # LOOP_HEADER
+  t2 = LOAD [i]  # load i
+  t3 = LOAD [t0]  # load n
+  t4 = LT t2, t3  # t2 < t3
+  JUMP_IF t4, L_while_body1  # while condition
+L_while_exit2:
+  t10 = LOAD [result]  # load result
+  RETURN t10  # return value
+L_while_body1:  # LOOP_BODY
+  t5 = LOAD [result]  # load result
+  t6 = LOAD [i]  # load i
+  t7 = ADD t5, t6  # t5 + t6
+  STORE [result], t7  # store result
+  t8 = LOAD [i]  # load i
+  t9 = ADD t8, 1  # t8 + 1
+  STORE [i], t9  # store i
+  JUMP L_while_header0

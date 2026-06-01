@@ -1,0 +1,89 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "a",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 1
+              },
+              "right": {
+                "type": "BinaryExpr",
+                "operator": "*",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 3
+                }
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "b",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "*",
+              "left": {
+                "type": "BinaryExpr",
+                "operator": "+",
+                "left": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 4
+                },
+                "right": {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 5
+                }
+              },
+              "right": {
+                "type": "Literal",
+                "literal_type": "int",
+                "value": 6
+              }
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "bool",
+            "name": "c",
+            "initializer": {
+              "type": "BinaryExpr",
+              "operator": "==",
+              "left": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "b"
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

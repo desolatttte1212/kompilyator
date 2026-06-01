@@ -1,0 +1,4 @@
+fn test() = int {
+    int x = 20 / 4;
+    return x;
+}

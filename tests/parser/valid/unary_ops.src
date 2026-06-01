@@ -1,0 +1,8 @@
+fn main() = void {
+    int a = -5;
+    int b = -(-10);
+    bool c = !true;
+    bool d = !false;
+    int e = -a + b;
+    bool f = !c && !d;
+}

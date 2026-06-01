@@ -1,0 +1,250 @@
+{
+  "type": "Program",
+  "declarations": [
+    {
+      "type": "FunctionDecl",
+      "name": "add",
+      "return_type": "int",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "a",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "b",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "BinaryExpr",
+              "operator": "+",
+              "left": {
+                "type": "Identifier",
+                "name": "a"
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "b"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "multiply",
+      "return_type": "int",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "x",
+          "param_type": "int"
+        },
+        {
+          "type": "Param",
+          "name": "y",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "ReturnStmt",
+            "value": {
+              "type": "BinaryExpr",
+              "operator": "*",
+              "left": {
+                "type": "Identifier",
+                "name": "x"
+              },
+              "right": {
+                "type": "Identifier",
+                "name": "y"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "print_value",
+      "return_type": "void",
+      "parameters": [
+        {
+          "type": "Param",
+          "name": "val",
+          "param_type": "int"
+        }
+      ],
+      "body": {
+        "type": "BlockStmt",
+        "statements": []
+      }
+    },
+    {
+      "type": "FunctionDecl",
+      "name": "main",
+      "return_type": "void",
+      "parameters": [],
+      "body": {
+        "type": "BlockStmt",
+        "statements": [
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "result",
+            "initializer": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "add"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 2
+                },
+                {
+                  "type": "Literal",
+                  "literal_type": "int",
+                  "value": 3
+                }
+              ]
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "product",
+            "initializer": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "multiply"
+              },
+              "arguments": [
+                {
+                  "type": "CallExpr",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "add"
+                  },
+                  "arguments": [
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 1
+                    },
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "CallExpr",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "add"
+                  },
+                  "arguments": [
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 3
+                    },
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 4
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          {
+            "type": "ExprStmt",
+            "expression": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "print_value"
+              },
+              "arguments": [
+                {
+                  "type": "Identifier",
+                  "name": "result"
+                }
+              ]
+            }
+          },
+          {
+            "type": "VarDeclStmt",
+            "var_type": "int",
+            "name": "nested",
+            "initializer": {
+              "type": "CallExpr",
+              "callee": {
+                "type": "Identifier",
+                "name": "add"
+              },
+              "arguments": [
+                {
+                  "type": "CallExpr",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "multiply"
+                  },
+                  "arguments": [
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 2
+                    },
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 3
+                    }
+                  ]
+                },
+                {
+                  "type": "CallExpr",
+                  "callee": {
+                    "type": "Identifier",
+                    "name": "multiply"
+                  },
+                  "arguments": [
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 4
+                    },
+                    {
+                      "type": "Literal",
+                      "literal_type": "int",
+                      "value": 5
+                    }
+                  ]
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

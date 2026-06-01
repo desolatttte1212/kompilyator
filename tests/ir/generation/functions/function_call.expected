@@ -1,0 +1,20 @@
+# IR Program
+
+function add: int (a: int, b: int)
+add_entry:  # ENTRY
+  t0 = ALLOCA 4  # param a
+  PARAM 0, t1  # load param 0
+  STORE [t0], t1
+  t2 = ALLOCA 4  # param b
+  PARAM 1, t3  # load param 1
+  STORE [t2], t3
+  t4 = LOAD [t0]  # load a
+  t5 = LOAD [t2]  # load b
+  t6 = ADD t4, t5  # t4 + t5
+  RETURN t6  # return value
+
+function main: void ()
+main_entry:  # ENTRY
+  t0 = CALL add(2, 3)  # call add
+  STORE [x], t0  # init x
+  RETURN
