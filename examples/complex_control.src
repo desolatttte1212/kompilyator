@@ -1,0 +1,76 @@
+// Сложный тест контроля потока (Спринт 6)
+
+// Определяем exit с пустым телом, чтобы парсер не ругался на ";"
+fn exit(int code) = void { }
+
+fn safe_check(int a, int b) = int {
+    // Короткое замыкание: если a == 0, выражение b / a НЕ вычисляется
+    if (a != 0 && b / a > 2) {
+        return 1;
+    }
+    return 0;
+}
+
+fn classify(int x) = int {
+    if (x > 0) {
+        if (x > 10) {
+            return 2;  // x > 10
+        } else {
+            return 1;  // 0 < x <= 10
+        }
+    } else {
+        if (x < -10) {
+            return -2; // x < -10
+        } else {
+            return -1; // -10 <= x <= 0
+        }
+    }
+}
+
+fn sum_even(int n) = int {
+    int i = 0;
+    int s = 0;
+    while (i < n) {
+        // Короткое замыкание: проверяем чётность перед делением
+        if (i % 2 == 0 && i > 0) {
+            s = s + i;
+        }
+        i = i + 1;
+    }
+    return s;
+}
+
+fn count_special(int limit) = int {
+    int count = 0;
+    int i = 0;
+    // while вместо for
+    while (i < limit) {
+        if (i % 3 == 0 || (i % 5 == 0 && i % 15 != 0)) {
+            count = count + 1;
+        }
+        i = i + 1;
+    }
+    return count;
+}
+
+fn main() = void {
+    // Тест 1: короткое замыкание (a=0, не должно быть деления на 0)
+    int r1 = safe_check(0, 100);
+
+    // Тест 2: вложенные условия
+    int r2 = classify(15);   // ожидаем 2
+    int r3 = classify(-5);   // ожидаем -1
+
+    // Тест 3: while + логика
+    int r4 = sum_even(10);   // 2+4+6+8 = 20
+
+    // Тест 4: while + сложное условие (FizzBuzz-логика)
+    int r5 = count_special(20);  // 3,5,6,9,10,12,15,18 = 8 чисел
+
+    // Завершение с кодом, зависящим от результатов
+    if (r1 == 0 && r2 == 2 && r3 == -1 && r4 == 20 && r5 == 8) {
+        exit(0);  // Все тесты прошли
+    } else {
+        exit(1);  // Ошибка
+    }
+}

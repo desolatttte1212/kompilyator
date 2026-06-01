@@ -1,0 +1,84 @@
+MiniCompiler Formal Grammar Specification (Sprint 2)
+Notation: Extended Backus-Naur Form (EBNF)
+
+Стартовый символ
+Program        ::= { Declaration } EOF ;
+
+Объявления (GRAM-5)
+Declaration    ::= FunctionDecl | StructDecl | VarDecl ;
+
+FunctionDecl   ::= "fn" Identifier "(" [ Parameters ] ")" [ "=" Type ] Block ;
+StructDecl     ::= "struct" Identifier "{" { VarDecl } "}" ;
+VarDecl        ::= Type Identifier [ "=" Expression ] ";" ;
+
+Parameters     ::= Parameter { "," Parameter } ;
+Parameter      ::= Type Identifier ;
+
+Операторы (GRAM-4)
+Statement      ::= Block 
+                 | IfStmt 
+                 | WhileStmt 
+                 | ForStmt 
+                 | ReturnStmt 
+                 | ExprStmt 
+                 | VarDecl ;
+
+Block          ::= "{" { Statement } "}" ;
+IfStmt         ::= "if" "(" Expression ")" Statement [ "else" Statement ] ;
+WhileStmt      ::= "while" "(" Expression ")" Statement ;
+ForStmt        ::= "for" "(" [ Expression ] ";" [ Expression ] ";" [ Expression ] ")" Statement ;
+ReturnStmt     ::= "return" [ Expression ] ";" ;
+ExprStmt       ::= Expression ";" ;
+
+Выражения (GRAM-3: Приоритет от низшего к высшему)
+
+9. Присваивание (Правоассоциативное)
+Expression     ::= Assignment ;
+Assignment     ::= LogicalOr { ( "=" ) Assignment } ;
+
+8. Логическое ИЛИ (Левоассоциативное)
+LogicalOr      ::= LogicalAnd { "||" LogicalAnd } ;
+
+7. Логическое И (Левоассоциативное)
+LogicalAnd     ::= Equality { "&&" Equality } ;
+
+6. Равенство (Неассоциативное)
+Equality       ::= Relational { ( "==" | "!=" ) Relational } ;
+
+5. Отношение (Неассоциативное)
+Relational     ::= Additive { ( "<" | "<=" | ">" | ">=" ) Additive } ;
+
+4. Аддитивные (Левоассоциативные)
+Additive       ::= Multiplicative { ( "+" | "-" ) Multiplicative } ;
+
+3. Мультипликативные (Левоассоциативные)
+Multiplicative ::= Unary { ( "*" | "/" | "%" ) Unary } ;
+
+2. Унарные операторы
+Unary          ::= [ "-" | "!" ] Primary ;
+
+1. Первичные выражения
+Primary        ::= Literal 
+                 | Identifier 
+                 | "(" Expression ")" 
+                 | Call ;
+
+Call           ::= Identifier "(" [ Arguments ] ")" ;
+Arguments      ::= Expression { "," Expression } ;
+
+Типы и литералы
+Type           ::= "int" | "float" | "bool" | "void" | Identifier ;
+
+Literal        ::= Integer | Float | String | Boolean ;
+
+Терминалы (соответствуют токенам Спринта 1)
+Identifier     ::= letter { letter | digit | "_" } ;
+Integer        ::= digit { digit } ;
+Float          ::= digit { digit } "." digit { digit } ;
+String         ::= '"' { character } '"' ;
+Boolean        ::= "true" | "false" ;
+
+Приоритет и ассоциативность операторов (GRAM-6)
+Левоассоциативные:  + - * / % && ||
+Правоассоциативные: =
+Неассоциативные:    == != < <= > >=

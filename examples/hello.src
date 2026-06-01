@@ -1,7 +1,13 @@
-fn main() {
-    bool a = true;
-    bool b = false;
-    if (a && !b) {
-        return true;
+fn double(int x) = int {
+    return x + x;
+}
+
+fn main() = void {
+    int i = 0;
+    int limit = 3;
+
+    while (i < limit) {
+        i = double(i);
+        i = i + 1;
     }
 }

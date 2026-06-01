@@ -4,13 +4,13 @@ from typing import Any, Optional
 
 
 class TokenType(Enum):
-    # Literals (LANG-4)
+    # Literals
     INT_LITERAL = auto()
     FLOAT_LITERAL = auto()
     STRING_LITERAL = auto()
     BOOL_LITERAL = auto()
 
-    # Identifiers & Keywords (LANG-2, LANG-3)
+    # Identifiers & Keywords
     IDENTIFIER = auto()
     KW_IF = auto()
     KW_ELSE = auto()
@@ -23,35 +23,38 @@ class TokenType(Enum):
     KW_VOID = auto()
     KW_STRUCT = auto()
     KW_FN = auto()
+    KW_EXTERN = auto()
 
-    # Operators (LANG-5)
+    # Operators
     PLUS = auto()
     MINUS = auto()
     STAR = auto()
     SLASH = auto()
     PERCENT = auto()
 
-    EQ = auto()  # ==
-    NEQ = auto()  # !=
-    LT = auto()  # <
-    LTE = auto()  # <=
-    GT = auto()  # >
-    GTE = auto()  # >=
+    EQ = auto()
+    NEQ = auto()
+    LT = auto()
+    LTE = auto()
+    GT = auto()
+    GTE = auto()
 
-    AND = auto()  # &&
-    OR = auto()  # ||
-    NOT = auto()  # !
-    ASSIGN = auto()  # =
+    AND = auto()
+    OR = auto()
+    NOT = auto()
+    ASSIGN = auto()
 
     # Delimiters
     LPAREN = auto()
     RPAREN = auto()
     LBRACE = auto()
     RBRACE = auto()
+    LBRACKET = auto()
+    RBRACKET = auto()
     SEMICOLON = auto()
     COMMA = auto()
+    ELLIPSIS = auto()
 
-    # Special
     EOF = auto()
     ERROR = auto()
 

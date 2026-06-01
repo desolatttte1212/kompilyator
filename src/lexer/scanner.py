@@ -2,10 +2,18 @@ from typing import List, Optional, Any
 from .tokens import Token, TokenType
 
 KEYWORDS = {
-    "if": TokenType.KW_IF, "else": TokenType.KW_ELSE, "while": TokenType.KW_WHILE,
-    "for": TokenType.KW_FOR, "int": TokenType.KW_INT, "float": TokenType.KW_FLOAT,
-    "bool": TokenType.KW_BOOL, "return": TokenType.KW_RETURN, "void": TokenType.KW_VOID,
-    "struct": TokenType.KW_STRUCT, "fn": TokenType.KW_FN
+    "if": TokenType.KW_IF,
+    "else": TokenType.KW_ELSE,
+    "while": TokenType.KW_WHILE,
+    "for": TokenType.KW_FOR,
+    "int": TokenType.KW_INT,
+    "float": TokenType.KW_FLOAT,
+    "bool": TokenType.KW_BOOL,
+    "return": TokenType.KW_RETURN,
+    "void": TokenType.KW_VOID,
+    "struct": TokenType.KW_STRUCT,
+    "fn": TokenType.KW_FN,
+    "extern": TokenType.KW_EXTERN,
 }
 
 
@@ -67,6 +75,10 @@ class Scanner:
                 return self._make_token(TokenType.LBRACE)
             elif c == '}':
                 return self._make_token(TokenType.RBRACE)
+            elif c == '[':
+                return self._make_token(TokenType.LBRACKET)
+            elif c == ']':
+                return self._make_token(TokenType.RBRACKET)
             elif c == ';':
                 return self._make_token(TokenType.SEMICOLON)
             elif c == ',':
@@ -105,6 +117,25 @@ class Scanner:
                     return self._make_token(TokenType.OR)
                 else:
                     self._error("Ожидался '|' после '|'")
+                    return self._make_token(TokenType.ERROR)
+            elif c == '&':
+                if self._match('&'):
+                    return self._make_token(TokenType.AND)
+                else:
+                    self._error("Ожидался '&' после '&'")
+                    return self._make_token(TokenType.ERROR)
+            elif c == '|':
+                if self._match('|'):
+                    return self._make_token(TokenType.OR)
+                else:
+                    self._error("Ожидался '|' после '|'")
+                    return self._make_token(TokenType.ERROR)
+
+            elif c == '.':
+                if self._match('.') and self._match('.'):
+                    return self._make_token(TokenType.ELLIPSIS)
+                else:
+                    self._error(f"Неожиданный символ: {c}")
                     return self._make_token(TokenType.ERROR)
 
             elif c == '"':
