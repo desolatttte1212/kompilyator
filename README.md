@@ -67,3 +67,81 @@ mini-compiler/
 ├── demo_full.ps1             # Скрипт демонстрации для Windows
 ├── demo_full.sh              # Скрипт демонстрации для Linux
 └── README.md
+```
+
+## Начало работы
+```bash
+#Активируйте виртуальное окружение:
+#Windows:
+.\venv\Scripts\activate
+#Linux/macOS:
+source venv/bin/activate
+```
+## Финальные команды компилятора
+Компилятор вызывается через модуль src.main:
+Полная компиляция (.src → .asm):
+```bash
+python -m src.main compile --input examples/demo_final.src --output out.asm --verbose
+```
+Проверка синтаксиса и семантики:
+```bash
+python -m src.main check --input file.src
+```
+Вывод IR (текст / dot / json):
+```bash
+python -m src.main ir --input file.src --format text --stats
+```
+Дамп таблицы символов:
+```bash
+python -m src.main symbols --input file.src --format json
+```
+Ручная сборка исполняемого файла:
+```bash
+# Windows
+nasm -f win64 out.asm -o out.obj
+gcc -o out.exe out.obj
+
+# Linux
+nasm -f elf64 out.asm -o out.o
+gcc -o out out.o
+```
+## Демонстрация
+Скрипты автоматически запускают тесты, собирают демо-файл, выводят листинг ассемблера и исполняют программу.
+Windows:
+```bash
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\demo_full.ps1
+```
+Linux / Ubuntu:
+```bash
+chmod +x demo_full.sh
+./demo_full.sh
+```
+Ожидаемый финал:
+```
+--- FINAL RESULT ---
+  Program Exit Code: 180
+  Status: SUCCESS (Expected: 180)
+
+ Demo Complete. Ready for defense.
+```
+Пример кода на MiniLang
+```
+fn add(int a, int b) = int {
+    return a + b;
+}
+
+fn main() = void {
+    int arr = malloc(12);      // выделение под 3 int
+    arr[0] = 100;
+    arr[1] = 20;
+    arr[2] = 60;
+
+    int sum = arr[0] + arr[1] + arr[2];
+    exit(sum);                 // код выхода: 180
+}
+```
+Все тесты проходят автоматически. При изменении генератора используйте флаги --generate (IR) и --update (Control Flow) для синхронизации эталонов.
+В демо-запуске оптимизация намеренно отключена для стабильной работы с адресной арифметикой массивов (edge-case DCE). Для продакшена включается флагом --optimize.
+Скрипты кроссплатформенны: demo_full.ps1 использует win64 формат NASM, demo_full.sh → elf64. ABI адаптирован под целевую ОС.
+Готов к запуску с USB-накопителя: не требует установки, автоматически подхватывает venv и системные пакеты.
