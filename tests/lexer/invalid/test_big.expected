@@ -1,0 +1,68 @@
+1:2 KW_FN "fn"
+1:5 IDENTIFIER "main"
+1:9 LPAREN "("
+1:10 RPAREN ")"
+1:12 LBRACE "{"
+2:5 KW_INT "int"
+2:9 IDENTIFIER "x"
+2:11 ASSIGN "="
+2:13 INT_LITERAL "10" 10
+2:15 SEMICOLON ";"
+3:5 KW_INT "int"
+3:9 IDENTIFIER "y"
+3:11 ASSIGN "="
+3:13 INT_LITERAL "20" 20
+3:16 ERROR "@"
+3:18 INT_LITERAL "30" 30
+3:20 SEMICOLON ";"
+4:5 KW_BOOL "bool"
+4:10 IDENTIFIER "f"
+4:12 ASSIGN "="
+4:14 BOOL_LITERAL "true" True
+4:18 SEMICOLON ";"
+5:5 KW_FLOAT "float"
+5:11 IDENTIFIER "bad"
+5:15 ASSIGN "="
+5:17 FLOAT_LITERAL "1.2" 1.2
+5:20 ERROR "."
+5:21 INT_LITERAL "3" 3
+5:22 SEMICOLON ";"
+6:5 KW_IF "if"
+6:8 LPAREN "("
+6:9 IDENTIFIER "f"
+6:11 ERROR "&"
+6:13 IDENTIFIER "f"
+6:14 RPAREN ")"
+6:16 LBRACE "{"
+6:17 RBRACE "}"
+7:5 KW_IF "if"
+7:8 LPAREN "("
+7:9 IDENTIFIER "f"
+7:11 ERROR "|"
+7:13 IDENTIFIER "f"
+7:14 RPAREN ")"
+7:16 LBRACE "{"
+7:17 RBRACE "}"
+8:5 KW_INT "int"
+8:9 INT_LITERAL "1" 1
+8:10 IDENTIFIER "bad"
+8:14 ASSIGN "="
+8:16 INT_LITERAL "1" 1
+8:17 SEMICOLON ";"
+9:5 ERROR "#"
+9:7 ERROR "\"
+9:8 ERROR "$"
+9:10 PERCENT "%"
+9:12 ERROR "^"
+10:5 KW_RETURN "return"
+10:12 INT_LITERAL "0" 0
+10:13 SEMICOLON ";"
+15:3 EOF ""
+Error at line 3, column 17: Неожиданный символ: @
+Error at line 5, column 21: Неожиданный символ: .
+Error at line 6, column 12: Ожидался '&' после '&'
+Error at line 7, column 12: Ожидался '|' после '|'
+Error at line 9, column 6: Неожиданный символ: #
+Error at line 9, column 8: Неожиданный символ: \
+Error at line 9, column 9: Неожиданный символ: $
+Error at line 9, column 13: Неожиданный символ: ^

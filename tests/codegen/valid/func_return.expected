@@ -1,0 +1,33 @@
+section .text
+global main
+
+get_val:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 32
+
+    ; Block: get_val_entry
+    mov eax, 42  ; return value
+    jmp .get_val_exit
+
+    .get_val_exit:
+    add rsp, 32
+    pop rbp
+    ret
+
+main:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 32
+
+    ; Block: main_entry
+    call get_val  ; call get_val
+    mov [rbp-16], rax
+    mov rax, [rbp-16]
+    mov [rbp-8], rax  ; init x
+    jmp .main_exit
+
+    .main_exit:
+    add rsp, 32
+    pop rbp
+    ret

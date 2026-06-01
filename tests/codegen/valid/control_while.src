@@ -1,0 +1,8 @@
+fn sum(int n) = void {
+    int i = 0;
+    int s = 0;
+    while (i < n) {
+        s = s + i;
+        i = i + 1;
+    }
+}

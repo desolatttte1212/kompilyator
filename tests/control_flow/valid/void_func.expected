@@ -1,0 +1,17 @@
+section .text
+global main
+
+do_nothing:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 32
+
+    ; Block: do_nothing_entry
+    mov rax, 5
+    mov [rbp-8], rax  ; init x
+    jmp .do_nothing_exit
+
+    .do_nothing_exit:
+    add rsp, 32
+    pop rbp
+    ret

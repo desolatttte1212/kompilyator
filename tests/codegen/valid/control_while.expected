@@ -1,0 +1,65 @@
+section .text
+global main
+
+sum:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 112
+
+    ; Block: sum_entry
+    mov r8, [rbp-32]
+    mov eax, [rbp-40]
+    mov [r8], eax
+    mov rax, 0
+    mov [rbp-16], rax  ; init i
+    mov rax, 0
+    mov [rbp-24], rax  ; init s
+    jmp .L_while_header0
+
+    ; Block: L_while_header0
+.L_while_header0:
+    mov rax, [rbp-16]
+    mov [rbp-48], rax  ; load i
+    mov r8, [rbp-32]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load n
+    mov rax, [rbp-48]
+    mov rdx, [rbp-56]
+    cmp rax, rdx  ; t2 < t3
+    setl al
+    movzx eax, al
+    mov [rbp-64], eax
+    mov rax, [rbp-64]
+    test rax, rax
+    jz .L_while_body1  ; while condition
+
+    ; Block: L_while_exit2
+.L_while_exit2:
+    jmp .sum_exit
+
+    ; Block: L_while_body1
+.L_while_body1:
+    mov rax, [rbp-24]
+    mov [rbp-72], rax  ; load s
+    mov rax, [rbp-16]
+    mov [rbp-80], rax  ; load i
+    mov rax, [rbp-72]
+    mov rdx, [rbp-80]
+    add rax, rdx  ; t5 + t6
+    mov [rbp-88], rax
+    mov rax, [rbp-88]
+    mov [rbp-24], rax  ; store s
+    mov rax, [rbp-16]
+    mov [rbp-96], rax  ; load i
+    mov rax, [rbp-96]
+    mov rdx, 1
+    add rax, rdx  ; t8 + 1
+    mov [rbp-104], rax
+    mov rax, [rbp-104]
+    mov [rbp-16], rax  ; store i
+    jmp .L_while_header0
+
+    .sum_exit:
+    add rsp, 112
+    pop rbp
+    ret

@@ -1,0 +1,27 @@
+[ERROR] Compilation failed: 'SemanticAnalyzer' object has no attribute 'error'
+Traceback (most recent call last):
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\main.py", line 304, in cmd_compile
+    decorated_ast = analyzer.analyze(ast)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\semantic\analyzer.py", line 38, in analyze
+    ast.accept(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\parser\ast_nodes.py", line 387, in accept
+    return visitor.visit_program(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\semantic\analyzer.py", line 69, in visit_program
+    for decl in node.declarations: decl.accept(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\parser\ast_nodes.py", line 346, in accept
+    return visitor.visit_function_decl(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\semantic\analyzer.py", line 96, in visit_function_decl
+    if node.body: node.body.accept(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\parser\ast_nodes.py", line 179, in accept
+    return visitor.visit_block_stmt(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\semantic\analyzer.py", line 118, in visit_block_stmt
+    stmt.accept(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\parser\ast_nodes.py", line 303, in accept
+    return visitor.visit_var_decl_stmt(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\semantic\analyzer.py", line 132, in visit_var_decl_stmt
+    node.initializer.accept(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\parser\ast_nodes.py", line 138, in accept
+    return visitor.visit_call_expr(self)
+  File "C:\Users\Desolate\PycharmProjects\kompilyator\mini-compiler\src\semantic\analyzer.py", line 274, in visit_call_expr
+    self.error(f"undefined function '{func_name}'")
+AttributeError: 'SemanticAnalyzer' object has no attribute 'error'

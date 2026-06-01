@@ -1,0 +1,6 @@
+fn add(int a, int b) = int {
+    return a + b;
+}
+fn test() = void {
+    int x = add(1);
+}

@@ -1,0 +1,60 @@
+section .text
+global main
+
+fact:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 96
+
+    ; Block: fact_entry
+    mov r8, [rbp-16]
+    mov eax, [rbp-24]
+    mov [r8], eax
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-32], eax  ; load n
+    mov rax, [rbp-32]
+    mov rdx, 1
+    cmp rax, rdx  ; t2 <= 1
+    setle al
+    movzx eax, al
+    mov [rbp-40], eax
+    mov rax, [rbp-40]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-48], eax  ; load n
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load n
+    mov rax, [rbp-56]
+    mov rdx, 1
+    sub rax, rdx  ; t5 - 1
+    mov [rbp-64], rax
+    mov rcx, [rbp-64]
+    call fact  ; call fact
+    mov [rbp-72], rax
+    mov rax, [rbp-48]
+    mov rdx, [rbp-72]
+    imul rax, rdx  ; t4 * t7
+    mov [rbp-80], rax
+    mov eax, [rbp-80]  ; return value
+    jmp .fact_exit
+
+    ; Block: L_then0
+.L_then0:
+    mov eax, 1  ; return value
+    jmp .fact_exit
+
+    ; Block: L_join2
+.L_join2:
+    jmp .fact_exit
+
+    .fact_exit:
+    add rsp, 96
+    pop rbp
+    ret

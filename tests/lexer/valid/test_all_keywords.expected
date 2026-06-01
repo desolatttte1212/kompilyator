@@ -1,4 +1,4 @@
-﻿1:2 KW_IF "if"
+1:2 KW_IF "if"
 1:5 KW_ELSE "else"
 1:10 KW_WHILE "while"
 1:16 KW_FOR "for"

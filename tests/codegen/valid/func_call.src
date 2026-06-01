@@ -1,0 +1,6 @@
+fn helper(int x) = int {
+    return x * 2;
+}
+fn main() = void {
+    int y = helper(5);
+}

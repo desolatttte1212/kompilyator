@@ -1,0 +1,237 @@
+section .text
+extern exit
+global main
+
+main:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 304
+
+    ; Block: main_entry
+    mov rax, 0
+    mov [rbp-8], rax  ; init i
+    mov rax, 0
+    mov [rbp-16], rax  ; init sum
+    mov rax, 5
+    mov [rbp-24], rax  ; init limit
+    jmp .L_while_header0
+
+    ; Block: L_while_header0
+.L_while_header0:
+    mov rax, [rbp-8]
+    mov [rbp-48], rax  ; load i
+    mov rax, [rbp-24]
+    mov [rbp-56], rax  ; load limit
+    mov rax, [rbp-48]
+    mov rdx, [rbp-56]
+    cmp rax, rdx  ; t0 < t1
+    setl al
+    movzx eax, al
+    mov [rbp-64], eax
+    mov rax, [rbp-64]
+    test rax, rax
+    jz .L_while_body1  ; while condition
+
+    ; Block: L_while_exit2
+.L_while_exit2:
+    mov rax, [rbp-16]
+    mov [rbp-136], rax  ; load sum
+    mov rax, [rbp-136]
+    mov rdx, 6
+    cmp rax, rdx  ; t11 != 6
+    setne al
+    movzx eax, al
+    mov [rbp-144], eax
+    mov rax, [rbp-144]
+    test rax, rax
+    jz .L_then6  ; if condition
+
+    ; Block: L_while_body1
+.L_while_body1:
+    mov rax, [rbp-8]
+    mov [rbp-72], rax  ; load i
+    mov rax, [rbp-72]
+    cqo
+    mov rcx, 2
+    idiv rcx  ; t3 % 2
+    mov rax, rdx
+    mov [rbp-80], rax
+    mov rax, [rbp-80]
+    mov rdx, 0
+    cmp rax, rdx  ; t4 == 0
+    sete al
+    movzx eax, al
+    mov [rbp-88], eax
+    mov rax, [rbp-88]
+    test rax, rax
+    jz .L_then3  ; if condition
+
+    ; Block: L_else4
+.L_else4:
+    jmp .L_join5
+
+    ; Block: L_then3
+.L_then3:
+    mov rax, [rbp-16]
+    mov [rbp-96], rax  ; load sum
+    mov rax, [rbp-8]
+    mov [rbp-104], rax  ; load i
+    mov rax, [rbp-96]
+    mov rdx, [rbp-104]
+    add rax, rdx  ; t6 + t7
+    mov [rbp-112], rax
+    mov rax, [rbp-112]
+    mov [rbp-16], rax  ; store sum
+    jmp .L_join5
+
+    ; Block: L_join5
+.L_join5:
+    mov rax, [rbp-8]
+    mov [rbp-120], rax  ; load i
+    mov rax, [rbp-120]
+    mov rdx, 1
+    add rax, rdx  ; t9 + 1
+    mov [rbp-128], rax
+    mov rax, [rbp-128]
+    mov [rbp-8], rax  ; store i
+
+    ; Block: L_else7
+.L_else7:
+    jmp .L_join8
+
+    ; Block: L_then6
+.L_then6:
+    mov rcx, 1
+    call exit  ; call exit
+    mov [rbp-152], rax
+    jmp .L_join8
+
+    ; Block: L_join8
+.L_join8:
+    mov rax, 0
+    mov [rbp-32], rax  ; init a
+    mov rax, 10
+    mov [rbp-40], rax  ; init b
+    mov rax, [rbp-32]
+    mov [rbp-160], rax  ; load a
+    mov rax, [rbp-160]
+    mov rdx, 0
+    cmp rax, rdx  ; t14 != 0
+    setne al
+    movzx eax, al
+    mov [rbp-168], eax
+    mov rax, [rbp-168]
+    test rax, rax
+    jnz .L_and_false12  ; short-circuit && left false
+
+    ; Block: L_and_right13
+.L_and_right13:
+    mov rax, [rbp-40]
+    mov [rbp-176], rax  ; load b
+    mov rax, [rbp-32]
+    mov [rbp-184], rax  ; load a
+    mov rax, [rbp-176]
+    cqo
+    mov rcx, [rbp-184]
+    idiv rcx  ; t16 / t17
+    mov [rbp-192], rax
+    mov rax, [rbp-192]
+    mov rdx, 5
+    cmp rax, rdx  ; t18 > 5
+    setg al
+    movzx eax, al
+    mov [rbp-200], eax
+    mov rax, [rbp-200]
+    mov [rbp-208], rax  ; && result = right
+    jmp .L_and_end14
+
+    ; Block: L_and_false12
+.L_and_false12:
+    mov dword [rbp-208], 0  ; && result = 0
+    jmp .L_and_end14
+
+    ; Block: L_and_end14
+.L_and_end14:
+    mov rax, [rbp-208]
+    test rax, rax
+    jz .L_then9  ; if condition
+
+    ; Block: L_else10
+.L_else10:
+    jmp .L_join11
+
+    ; Block: L_then9
+.L_then9:
+    mov rcx, 1
+    call exit  ; call exit
+    mov [rbp-216], rax
+    jmp .L_join11
+
+    ; Block: L_join11
+.L_join11:
+    mov rax, [rbp-32]
+    mov [rbp-224], rax  ; load a
+    mov rax, [rbp-224]
+    mov rdx, 0
+    cmp rax, rdx  ; t22 == 0
+    sete al
+    movzx eax, al
+    mov [rbp-232], eax
+    mov rax, [rbp-232]
+    test rax, rax
+    jz .L_or_true18  ; short-circuit || left true
+
+    ; Block: L_or_right19
+.L_or_right19:
+    mov rax, [rbp-40]
+    mov [rbp-240], rax  ; load b
+    mov rax, [rbp-32]
+    mov [rbp-248], rax  ; load a
+    mov rax, [rbp-240]
+    cqo
+    mov rcx, [rbp-248]
+    idiv rcx  ; t24 / t25
+    mov [rbp-256], rax
+    mov rax, [rbp-256]
+    mov rdx, 2
+    cmp rax, rdx  ; t26 == 2
+    sete al
+    movzx eax, al
+    mov [rbp-264], eax
+    mov rax, [rbp-264]
+    mov [rbp-272], rax  ; || result = right
+    jmp .L_or_end20
+
+    ; Block: L_or_true18
+.L_or_true18:
+    mov dword [rbp-272], 1  ; || result = 1
+    jmp .L_or_end20
+
+    ; Block: L_or_end20
+.L_or_end20:
+    mov rax, [rbp-272]
+    test rax, rax
+    jz .L_then15  ; if condition
+
+    ; Block: L_else16
+.L_else16:
+    mov rcx, 1
+    call exit  ; call exit
+    mov [rbp-280], rax
+    jmp .L_join17
+
+    ; Block: L_then15
+.L_then15:
+    mov rcx, 0
+    call exit  ; call exit
+    mov [rbp-288], rax
+    jmp .L_join17
+
+    ; Block: L_join17
+.L_join17:
+    jmp .main_exit
+
+    .main_exit:
+    add rsp, 304
+    pop rbp
+    ret

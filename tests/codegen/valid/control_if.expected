@@ -1,0 +1,43 @@
+section .text
+global main
+
+test:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 64
+
+    ; Block: test_entry
+    mov r8, [rbp-24]
+    mov eax, [rbp-32]
+    mov [r8], eax
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-40], eax  ; load x
+    mov rax, [rbp-40]
+    mov rdx, 0
+    cmp rax, rdx  ; t2 > 0
+    setg al
+    movzx eax, al
+    mov [rbp-48], eax
+    mov rax, [rbp-48]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    mov rax, 1
+    mov [rbp-16], rax  ; init y
+    jmp .L_join2
+
+    ; Block: L_join2
+.L_join2:
+    jmp .test_exit
+
+    .test_exit:
+    add rsp, 64
+    pop rbp
+    ret

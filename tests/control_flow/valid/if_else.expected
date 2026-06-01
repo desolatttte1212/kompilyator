@@ -1,0 +1,55 @@
+section .text
+global main
+
+max:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 96
+
+    ; Block: max_entry
+    mov r8, [rbp-24]
+    mov eax, [rbp-32]
+    mov [r8], eax
+    mov r8, [rbp-40]
+    mov eax, [rbp-48]
+    mov [r8], eax
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load a
+    mov r8, [rbp-40]
+    mov eax, [r8]
+    mov [rbp-64], eax  ; load b
+    mov rax, [rbp-56]
+    mov rdx, [rbp-64]
+    cmp rax, rdx  ; t4 > t5
+    setg al
+    movzx eax, al
+    mov [rbp-72], eax
+    mov rax, [rbp-72]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    mov r8, [rbp-40]
+    mov eax, [r8]
+    mov [rbp-80], eax  ; load b
+    mov eax, [rbp-80]  ; return value
+    jmp .max_exit
+
+    ; Block: L_then0
+.L_then0:
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-88], eax  ; load a
+    mov eax, [rbp-88]  ; return value
+    jmp .max_exit
+
+    ; Block: L_join2
+.L_join2:
+    jmp .max_exit
+
+    .max_exit:
+    add rsp, 96
+    pop rbp
+    ret

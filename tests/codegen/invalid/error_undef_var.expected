@@ -1,0 +1,9 @@
+[ERROR] Semantic analysis failed:
+
+[ERROR] Semantic analysis failed with 1 error(s):
+
+semantic error: undeclared identifier 'y'
+  --> tests\codegen\invalid\error_undef_var.src:2:13
+   | in block
+
+--- Summary: 1 errors, 0 warnings ---

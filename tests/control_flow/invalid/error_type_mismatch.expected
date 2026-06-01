@@ -1,0 +1,11 @@
+[ERROR] Semantic analysis failed:
+
+[ERROR] Semantic analysis failed with 1 error(s):
+
+semantic error: type mismatch: expected int, got string
+  --> tests\control_flow\invalid\error_type_mismatch.src:2:5
+   | in return statement
+   = expected: int
+   = found: string
+
+--- Summary: 1 errors, 0 warnings ---

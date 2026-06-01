@@ -1,0 +1,101 @@
+section .text
+global main
+
+complex_cond:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 144
+
+    ; Block: complex_cond_entry
+    mov r8, [rbp-32]
+    mov eax, [rbp-40]
+    mov [r8], eax
+    mov r8, [rbp-48]
+    mov eax, [rbp-56]
+    mov [r8], eax
+    mov r8, [rbp-64]
+    mov eax, [rbp-72]
+    mov [r8], eax
+    mov r8, [rbp-32]
+    mov eax, [r8]
+    mov [rbp-80], eax  ; load a
+    mov rax, [rbp-80]
+    mov rdx, 0
+    cmp rax, rdx  ; t6 > 0
+    setg al
+    movzx eax, al
+    mov [rbp-88], eax
+    mov rax, [rbp-88]
+    test rax, rax
+    jnz .L_and_false3  ; short-circuit && left false
+
+    ; Block: L_and_right4
+.L_and_right4:
+    mov r8, [rbp-48]
+    mov eax, [r8]
+    mov [rbp-96], eax  ; load b
+    mov rax, [rbp-96]
+    mov rdx, 0
+    cmp rax, rdx  ; t8 > 0
+    setg al
+    movzx eax, al
+    mov [rbp-104], eax
+    mov rax, [rbp-104]
+    mov [rbp-112], rax  ; && result = right
+    jmp .L_and_end5
+
+    ; Block: L_and_false3
+.L_and_false3:
+    mov dword [rbp-112], 0  ; && result = 0
+    jmp .L_and_end5
+
+    ; Block: L_and_end5
+.L_and_end5:
+    mov rax, [rbp-112]
+    test rax, rax
+    jz .L_or_true6  ; short-circuit || left true
+
+    ; Block: L_or_right7
+.L_or_right7:
+    mov r8, [rbp-64]
+    mov eax, [r8]
+    mov [rbp-120], eax  ; load c
+    mov rax, [rbp-120]
+    mov rdx, 0
+    cmp rax, rdx  ; t11 < 0
+    setl al
+    movzx eax, al
+    mov [rbp-128], eax
+    mov rax, [rbp-128]
+    mov [rbp-136], rax  ; || result = right
+    jmp .L_or_end8
+
+    ; Block: L_or_true6
+.L_or_true6:
+    mov dword [rbp-136], 1  ; || result = 1
+    jmp .L_or_end8
+
+    ; Block: L_or_end8
+.L_or_end8:
+    mov rax, [rbp-136]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    mov eax, 1  ; return value
+    jmp .complex_cond_exit
+
+    ; Block: L_join2
+.L_join2:
+    mov eax, 0  ; return value
+    jmp .complex_cond_exit
+
+    .complex_cond_exit:
+    add rsp, 144
+    pop rbp
+    ret

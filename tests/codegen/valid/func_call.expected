@@ -1,0 +1,44 @@
+section .text
+global main
+
+helper:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 48
+
+    ; Block: helper_entry
+    mov r8, [rbp-16]
+    mov eax, [rbp-24]
+    mov [r8], eax
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-32], eax  ; load x
+    mov rax, [rbp-32]
+    mov rdx, 2
+    imul rax, rdx  ; t2 * 2
+    mov [rbp-40], rax
+    mov eax, [rbp-40]  ; return value
+    jmp .helper_exit
+
+    .helper_exit:
+    add rsp, 48
+    pop rbp
+    ret
+
+main:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 32
+
+    ; Block: main_entry
+    mov rcx, 5
+    call helper  ; call helper
+    mov [rbp-16], rax
+    mov rax, [rbp-16]
+    mov [rbp-8], rax  ; init y
+    jmp .main_exit
+
+    .main_exit:
+    add rsp, 32
+    pop rbp
+    ret

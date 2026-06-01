@@ -1,0 +1,49 @@
+section .text
+global main
+
+is_even:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 64
+
+    ; Block: is_even_entry
+    mov r8, [rbp-16]
+    mov eax, [rbp-24]
+    mov [r8], eax
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-32], eax  ; load n
+    mov rax, [rbp-32]
+    cqo
+    mov rcx, 2
+    idiv rcx  ; t2 % 2
+    mov rax, rdx
+    mov [rbp-40], rax
+    mov rax, [rbp-40]
+    mov rdx, 0
+    cmp rax, rdx  ; t3 == 0
+    sete al
+    movzx eax, al
+    mov [rbp-48], eax
+    mov rax, [rbp-48]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    mov eax, 1  ; return value
+    jmp .is_even_exit
+
+    ; Block: L_join2
+.L_join2:
+    mov eax, 0  ; return value
+    jmp .is_even_exit
+
+    .is_even_exit:
+    add rsp, 64
+    pop rbp
+    ret

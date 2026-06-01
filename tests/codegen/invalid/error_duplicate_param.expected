@@ -1,0 +1,9 @@
+[ERROR] Semantic analysis failed:
+
+[ERROR] Semantic analysis failed with 1 error(s):
+
+semantic error: duplicate declaration of 'a' in same scope
+  --> tests\codegen\invalid\error_duplicate_param.src:1:16
+   | in function test
+
+--- Summary: 1 errors, 0 warnings ---

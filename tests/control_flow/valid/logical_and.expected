@@ -1,0 +1,80 @@
+section .text
+global main
+
+safe_check:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 112
+
+    ; Block: safe_check_entry
+    mov r8, [rbp-24]
+    mov eax, [rbp-32]
+    mov [r8], eax
+    mov r8, [rbp-40]
+    mov eax, [rbp-48]
+    mov [r8], eax
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load a
+    mov rax, [rbp-56]
+    mov rdx, 0
+    cmp rax, rdx  ; t4 != 0
+    setne al
+    movzx eax, al
+    mov [rbp-64], eax
+    mov rax, [rbp-64]
+    test rax, rax
+    jnz .L_and_false3  ; short-circuit && left false
+
+    ; Block: L_and_right4
+.L_and_right4:
+    mov r8, [rbp-40]
+    mov eax, [r8]
+    mov [rbp-72], eax  ; load b
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-80], eax  ; load a
+    mov rax, [rbp-72]
+    cqo
+    mov rcx, [rbp-80]
+    idiv rcx  ; t6 / t7
+    mov [rbp-88], rax
+    mov rax, [rbp-88]
+    mov rdx, 2
+    cmp rax, rdx  ; t8 > 2
+    setg al
+    movzx eax, al
+    mov [rbp-96], eax
+    mov rax, [rbp-96]
+    mov [rbp-104], rax  ; && result = right
+    jmp .L_and_end5
+
+    ; Block: L_and_false3
+.L_and_false3:
+    mov dword [rbp-104], 0  ; && result = 0
+    jmp .L_and_end5
+
+    ; Block: L_and_end5
+.L_and_end5:
+    mov rax, [rbp-104]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    mov eax, 1  ; return value
+    jmp .safe_check_exit
+
+    ; Block: L_join2
+.L_join2:
+    mov eax, 0  ; return value
+    jmp .safe_check_exit
+
+    .safe_check_exit:
+    add rsp, 112
+    pop rbp
+    ret

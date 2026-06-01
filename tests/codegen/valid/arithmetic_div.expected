@@ -1,0 +1,33 @@
+section .text
+global main
+
+div:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 80
+
+    ; Block: div_entry
+    mov r8, [rbp-24]
+    mov eax, [rbp-32]
+    mov [r8], eax
+    mov r8, [rbp-40]
+    mov eax, [rbp-48]
+    mov [r8], eax
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load a
+    mov r8, [rbp-40]
+    mov eax, [r8]
+    mov [rbp-64], eax  ; load b
+    mov rax, [rbp-56]
+    cqo
+    mov rcx, [rbp-64]
+    idiv rcx  ; t4 / t5
+    mov [rbp-72], rax
+    mov eax, [rbp-72]  ; return value
+    jmp .div_exit
+
+    .div_exit:
+    add rsp, 80
+    pop rbp
+    ret

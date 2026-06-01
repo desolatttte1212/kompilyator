@@ -1,0 +1,52 @@
+section .text
+global main
+
+calc:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 144
+
+    ; Block: calc_entry
+    mov r8, [rbp-32]
+    mov eax, [rbp-40]
+    mov [r8], eax
+    mov r8, [rbp-48]
+    mov eax, [rbp-56]
+    mov [r8], eax
+    mov r8, [rbp-64]
+    mov eax, [rbp-72]
+    mov [r8], eax
+    mov r8, [rbp-32]
+    mov eax, [r8]
+    mov [rbp-80], eax  ; load a
+    mov r8, [rbp-48]
+    mov eax, [r8]
+    mov [rbp-88], eax  ; load b
+    mov rax, [rbp-80]
+    mov rdx, [rbp-88]
+    add rax, rdx  ; t6 + t7
+    mov [rbp-96], rax
+    mov r8, [rbp-64]
+    mov eax, [r8]
+    mov [rbp-104], eax  ; load c
+    mov rax, [rbp-104]
+    mov rdx, 1
+    sub rax, rdx  ; t9 - 1
+    mov [rbp-112], rax
+    mov rax, [rbp-96]
+    mov rdx, [rbp-112]
+    imul rax, rdx  ; t8 * t10
+    mov [rbp-120], rax
+    mov rax, [rbp-120]
+    cqo
+    mov rcx, 5
+    idiv rcx  ; t11 % 5
+    mov rax, rdx
+    mov [rbp-128], rax
+    mov eax, [rbp-128]  ; return value
+    jmp .calc_exit
+
+    .calc_exit:
+    add rsp, 144
+    pop rbp
+    ret

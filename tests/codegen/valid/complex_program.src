@@ -1,0 +1,17 @@
+fn factorial(int n) = int {
+    if (n <= 1) {
+        return 1;
+    }
+    return n * factorial(n - 1);
+}
+
+fn main() = void {
+    int limit = 4;
+    int i = 1;
+    int total = 0;
+
+    while (i <= limit) {
+        total = total + factorial(i);
+        i = i + 1;
+    }
+}

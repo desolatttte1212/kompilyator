@@ -1,0 +1,65 @@
+section .text
+global main
+
+test:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 64
+
+    ; Block: test_entry
+    mov rax, 0
+    mov [rbp-8], rax  ; init x
+    mov rax, [rbp-8]
+    mov [rbp-16], rax  ; load x
+    mov rax, [rbp-16]
+    mov rdx, 0
+    cmp rax, rdx  ; t0 > 0
+    setg al
+    movzx eax, al
+    mov [rbp-24], eax
+    mov rax, [rbp-24]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    jmp .L_while_header3
+
+    ; Block: L_while_header3
+.L_while_header3:
+    mov rax, [rbp-8]
+    mov [rbp-32], rax  ; load x
+    mov rax, [rbp-32]
+    mov rdx, 10
+    cmp rax, rdx  ; t2 < 10
+    setl al
+    movzx eax, al
+    mov [rbp-40], eax
+    mov rax, [rbp-40]
+    test rax, rax
+    jz .L_while_body4  ; while condition
+
+    ; Block: L_while_body4
+.L_while_body4:
+    mov rax, [rbp-8]
+    mov [rbp-48], rax  ; load x
+    mov rax, [rbp-48]
+    mov rdx, 1
+    add rax, rdx  ; t4 + 1
+    mov [rbp-56], rax
+    mov rax, [rbp-56]
+    mov [rbp-8], rax  ; store x
+    jmp .L_while_header3
+
+    ; Block: L_join2
+.L_join2:
+    jmp .test_exit
+
+    .test_exit:
+    add rsp, 64
+    pop rbp
+    ret

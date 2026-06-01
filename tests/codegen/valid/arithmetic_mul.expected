@@ -1,0 +1,32 @@
+section .text
+global main
+
+mul:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 80
+
+    ; Block: mul_entry
+    mov r8, [rbp-24]
+    mov eax, [rbp-32]
+    mov [r8], eax
+    mov r8, [rbp-40]
+    mov eax, [rbp-48]
+    mov [r8], eax
+    mov r8, [rbp-24]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load a
+    mov r8, [rbp-40]
+    mov eax, [r8]
+    mov [rbp-64], eax  ; load b
+    mov rax, [rbp-56]
+    mov rdx, [rbp-64]
+    imul rax, rdx  ; t4 * t5
+    mov [rbp-72], rax
+    mov eax, [rbp-72]  ; return value
+    jmp .mul_exit
+
+    .mul_exit:
+    add rsp, 80
+    pop rbp
+    ret

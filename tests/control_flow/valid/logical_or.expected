@@ -1,0 +1,69 @@
+section .text
+global main
+
+check_range:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 80
+
+    ; Block: check_range_entry
+    mov r8, [rbp-16]
+    mov eax, [rbp-24]
+    mov [r8], eax
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-32], eax  ; load x
+    mov rax, [rbp-32]
+    mov rdx, 0
+    cmp rax, rdx  ; t2 < 0
+    setl al
+    movzx eax, al
+    mov [rbp-40], eax
+    mov rax, [rbp-40]
+    test rax, rax
+    jz .L_or_true3  ; short-circuit || left true
+
+    ; Block: L_or_right4
+.L_or_right4:
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-48], eax  ; load x
+    mov rax, [rbp-48]
+    mov rdx, 100
+    cmp rax, rdx  ; t4 > 100
+    setg al
+    movzx eax, al
+    mov [rbp-56], eax
+    mov rax, [rbp-56]
+    mov [rbp-64], rax  ; || result = right
+    jmp .L_or_end5
+
+    ; Block: L_or_true3
+.L_or_true3:
+    mov dword [rbp-64], 1  ; || result = 1
+    jmp .L_or_end5
+
+    ; Block: L_or_end5
+.L_or_end5:
+    mov rax, [rbp-64]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    mov eax, 1  ; return value
+    jmp .check_range_exit
+
+    ; Block: L_join2
+.L_join2:
+    mov eax, 0  ; return value
+    jmp .check_range_exit
+
+    .check_range_exit:
+    add rsp, 80
+    pop rbp
+    ret

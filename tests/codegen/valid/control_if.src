@@ -1,0 +1,5 @@
+fn test(int x) = void {
+    if (x > 0) {
+        int y = 1;
+    }
+}

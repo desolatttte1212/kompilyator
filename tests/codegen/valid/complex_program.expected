@@ -1,0 +1,124 @@
+section .text
+global main
+
+factorial:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 96
+
+    ; Block: factorial_entry
+    mov r8, [rbp-16]
+    mov eax, [rbp-24]
+    mov [r8], eax
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-32], eax  ; load n
+    mov rax, [rbp-32]
+    mov rdx, 1
+    cmp rax, rdx  ; t2 <= 1
+    setle al
+    movzx eax, al
+    mov [rbp-40], eax
+    mov rax, [rbp-40]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    jmp .L_join2
+
+    ; Block: L_then0
+.L_then0:
+    mov eax, 1  ; return value
+    jmp .factorial_exit
+
+    ; Block: L_join2
+.L_join2:
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-48], eax  ; load n
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load n
+    mov rax, [rbp-56]
+    mov rdx, 1
+    sub rax, rdx  ; t5 - 1
+    mov [rbp-64], rax
+    mov rcx, [rbp-64]
+    call factorial  ; call factorial
+    mov [rbp-72], rax
+    mov rax, [rbp-48]
+    mov rdx, [rbp-72]
+    imul rax, rdx  ; t4 * t7
+    mov [rbp-80], rax
+    mov eax, [rbp-80]  ; return value
+    jmp .factorial_exit
+
+    .factorial_exit:
+    add rsp, 96
+    pop rbp
+    ret
+
+main:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 112
+
+    ; Block: main_entry
+    mov rax, 4
+    mov [rbp-8], rax  ; init limit
+    mov rax, 1
+    mov [rbp-16], rax  ; init i
+    mov rax, 0
+    mov [rbp-24], rax  ; init total
+    jmp .L_while_header0
+
+    ; Block: L_while_header0
+.L_while_header0:
+    mov rax, [rbp-16]
+    mov [rbp-32], rax  ; load i
+    mov rax, [rbp-8]
+    mov [rbp-40], rax  ; load limit
+    mov rax, [rbp-32]
+    mov rdx, [rbp-40]
+    cmp rax, rdx  ; t0 <= t1
+    setle al
+    movzx eax, al
+    mov [rbp-48], eax
+    mov rax, [rbp-48]
+    test rax, rax
+    jz .L_while_body1  ; while condition
+
+    ; Block: L_while_exit2
+.L_while_exit2:
+    jmp .main_exit
+
+    ; Block: L_while_body1
+.L_while_body1:
+    mov rax, [rbp-24]
+    mov [rbp-56], rax  ; load total
+    mov rax, [rbp-16]
+    mov [rbp-64], rax  ; load i
+    mov rcx, [rbp-64]
+    call factorial  ; call factorial
+    mov [rbp-72], rax
+    mov rax, [rbp-56]
+    mov rdx, [rbp-72]
+    add rax, rdx  ; t3 + t5
+    mov [rbp-80], rax
+    mov rax, [rbp-80]
+    mov [rbp-24], rax  ; store total
+    mov rax, [rbp-16]
+    mov [rbp-88], rax  ; load i
+    mov rax, [rbp-88]
+    mov rdx, 1
+    add rax, rdx  ; t7 + 1
+    mov [rbp-96], rax
+    mov rax, [rbp-96]
+    mov [rbp-16], rax  ; store i
+    jmp .L_while_header0
+
+    .main_exit:
+    add rsp, 112
+    pop rbp
+    ret

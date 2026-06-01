@@ -1,0 +1,7 @@
+fn safe_check(int a, int b) = int {
+    // Короткое замыкание: если a==0, деление не выполняется
+    if (a != 0 && b / a > 2) {
+        return 1;
+    }
+    return 0;
+}

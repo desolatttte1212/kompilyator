@@ -1,0 +1,66 @@
+section .text
+global main
+
+classify:
+    push rbp
+    mov rbp, rsp
+    sub rsp, 80
+
+    ; Block: classify_entry
+    mov r8, [rbp-16]
+    mov eax, [rbp-24]
+    mov [r8], eax
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-32], eax  ; load x
+    mov rax, [rbp-32]
+    mov rdx, 0
+    cmp rax, rdx  ; t2 > 0
+    setg al
+    movzx eax, al
+    mov [rbp-40], eax
+    mov rax, [rbp-40]
+    test rax, rax
+    jz .L_then0  ; if condition
+
+    ; Block: L_else1
+.L_else1:
+    mov rax, 1
+    neg rax  ; -1
+    mov [rbp-48], rax
+    mov eax, [rbp-48]  ; return value
+    jmp .classify_exit
+
+    ; Block: L_then0
+.L_then0:
+    mov r8, [rbp-16]
+    mov eax, [r8]
+    mov [rbp-56], eax  ; load x
+    mov rax, [rbp-56]
+    mov rdx, 10
+    cmp rax, rdx  ; t5 > 10
+    setg al
+    movzx eax, al
+    mov [rbp-64], eax
+    mov rax, [rbp-64]
+    test rax, rax
+    jz .L_then3  ; if condition
+
+    ; Block: L_else4
+.L_else4:
+    mov eax, 1  ; return value
+    jmp .classify_exit
+
+    ; Block: L_then3
+.L_then3:
+    mov eax, 2  ; return value
+    jmp .classify_exit
+
+    ; Block: L_join2
+.L_join2:
+    jmp .classify_exit
+
+    .classify_exit:
+    add rsp, 80
+    pop rbp
+    ret
