@@ -4,7 +4,6 @@ import argparse
 import json
 from typing import Optional
 
-# Исправленные относительные импорты
 from .lexer.scanner import Scanner
 from .lexer.tokens import Token, TokenType
 from .parser.parser import Parser
@@ -13,8 +12,6 @@ from .semantic.analyzer import SemanticAnalyzer
 from .semantic.type_system import Types
 from .ir.generator import IRGenerator
 from .ir.printer import IRPrinter, CFGDotPrinter, IRJsonPrinter, print_ir, generate_cfg_dot, ir_to_json
-
-# 🆕 Спринт 5: Импорт генератора x86-64 кода
 from .codegen.x86_generator import X86Generator
 
 
@@ -34,6 +31,45 @@ def write_output(content: str, output_file: Optional[str]):
     else:
         print(content)
 
+
+def print_stats(ir_program):
+    total_blocks = 0
+    total_instructions = 0
+    instruction_counts = {}
+
+    for func_name, func in ir_program.functions.items():
+        for block in func.blocks:
+            total_blocks += 1
+            for instr in block.instructions:
+                total_instructions += 1
+                instr_type = instr.instruction_type.name
+                instruction_counts[instr_type] = instruction_counts.get(instr_type, 0) + 1
+
+    print(f"\n=== IR Statistics ===", file=sys.stderr)
+    print(f"Functions: {len(ir_program.functions)}", file=sys.stderr)
+    print(f"Basic Blocks: {total_blocks}", file=sys.stderr)
+    print(f"Total Instructions: {total_instructions}", file=sys.stderr)
+    print(f"\nInstructions by type:", file=sys.stderr)
+    for instr_type, count in sorted(instruction_counts.items()):
+        print(f"  {instr_type}: {count}", file=sys.stderr)
+
+
+def print_detailed_error(filepath: str, line: int, col: int, message: str, source_lines: list):
+    """Выводит ошибку в стиле GCC/Clang с подсветкой строки и кареткой."""
+    print(f"{filepath}:{line}:{col}: error: {message}", file=sys.stderr)
+
+    if source_lines and 0 <= line - 1 < len(source_lines):
+        line_content = source_lines[line - 1].rstrip()
+        # Безопасное позиционирование каретки (защита от выхода за границы строки)
+        caret_idx = max(0, min(col - 1, len(line_content)))
+        print(f"  {line:>4} | {line_content}", file=sys.stderr)
+        print(f"       | {' ' * caret_idx}^", file=sys.stderr)
+    print("", file=sys.stderr)
+
+
+# ========================
+# COMMAND HANDLERS
+# ========================
 
 def cmd_lex(args):
     try:
@@ -56,21 +92,20 @@ def cmd_lex(args):
 def cmd_parse(args):
     try:
         source = read_file(args.input)
-
         scanner = Scanner(source)
         tokens = scanner.scan_tokens()
 
         if args.verbose:
-            print(f"Tokenized {len(tokens)} tokens", file=sys.stderr)
+            print(f"[LEX] Tokenized {len(tokens)} tokens", file=sys.stderr)
 
         parser = Parser(tokens)
         ast = parser.parse()
 
         if parser.has_errors():
-            print(f"\n[ERROR] Parsing completed with {len(parser.errors)} error(s):", file=sys.stderr)
+            print(f"\n[ERROR] Parsing failed with {len(parser.errors)} error(s):", file=sys.stderr)
+            source_lines = source.splitlines()
             for error in parser.get_errors():
-                print(f"  [Line {error.line}:{error.column}] {error.message}", file=sys.stderr)
-
+                print_detailed_error(args.input, error.line, error.column, error.message, source_lines)
             if not ast:
                 sys.exit(1)
 
@@ -118,8 +153,9 @@ def cmd_check(args):
 
         if parser.has_errors():
             print(f"\n[ERROR] Parsing failed with {len(parser.errors)} error(s):", file=sys.stderr)
+            source_lines = source.splitlines()
             for error in parser.get_errors():
-                print(f"  [Line {error.line}:{error.column}] {error.message}", file=sys.stderr)
+                print_detailed_error(args.input, error.line, error.column, error.message, source_lines)
             sys.exit(1)
 
         if args.verbose:
@@ -128,24 +164,21 @@ def cmd_check(args):
         analyzer = SemanticAnalyzer(filename=args.input)
         decorated_ast = analyzer.analyze(ast)
 
-        # Вывод типов или таблицы символов (если запрошено)
         if args.show_types:
             from .semantic.visitors import TypeAnnotatedPrinter
             printer = TypeAnnotatedPrinter()
-            write_output(printer.print(decorated_ast), args.output)
+            output = printer.print(decorated_ast)
+            write_output(output, args.output)
         elif args.symbols_only:
             sym_table = analyzer.get_symbol_table()
-            output = json.dumps(sym_table.to_dict(), indent=2, ensure_ascii=False) if args.format == 'json' else sym_table.dump()
+            if args.format == 'json':
+                output = json.dumps(sym_table.to_dict(), indent=2, ensure_ascii=False)
+            else:
+                output = sym_table.dump()
             write_output(output, args.output)
 
-        # 🔑 КЛЮЧЕВОЙ ФИКС: Явный вывод ошибок в stderr в формате, который ждёт раннер
         if analyzer.has_errors():
-            error_list = getattr(analyzer, 'errors', []) or getattr(analyzer, '_errors', [])
-            if not error_list:
-                # Fallback, если список ошибок пуст, но флаг has_errors=True
-                print("semantic error: analysis failed", file=sys.stderr)
-            for err in error_list:
-                print(f"semantic error: {err}", file=sys.stderr)
+            analyzer.print_report()
             sys.exit(1)
         else:
             print("[SUCCESS] Semantic analysis passed!", file=sys.stderr)
@@ -167,7 +200,6 @@ def cmd_check(args):
 def cmd_symbols(args):
     try:
         source = read_file(args.input)
-
         scanner = Scanner(source)
         tokens = scanner.scan_tokens()
 
@@ -213,7 +245,6 @@ def cmd_symbols(args):
 def cmd_ir(args):
     try:
         source = read_file(args.input)
-
         scanner = Scanner(source)
         tokens = scanner.scan_tokens()
 
@@ -278,10 +309,10 @@ def cmd_ir(args):
         traceback.print_exc()
         sys.exit(1)
 
+
 def cmd_compile(args):
     try:
         source = read_file(args.input)
-
         scanner = Scanner(source)
         tokens = scanner.scan_tokens()
 
@@ -313,7 +344,8 @@ def cmd_compile(args):
 
         ir_generator = IRGenerator(symbol_table=analyzer.get_symbol_table())
         ir_program = ir_generator.generate(decorated_ast)
-        if getattr(args, 'optimize', False):
+
+        if args.optimize:
             from .ir.optimizer import OptimizationPipeline
             optimizer = OptimizationPipeline(ir_program)
             ir_program = optimizer.run()
@@ -332,6 +364,9 @@ def cmd_compile(args):
 
         print(f"[SUCCESS] Assembly generated: {output_file}", file=sys.stderr)
         if args.verbose:
+            print(f"\n[INFO] mycc version 1.0.0 (Sprint 8)", file=sys.stderr)
+            target_os = "windows" if os.name == "nt" else "linux"
+            print(f"[INFO] Target: x86_64-{target_os}", file=sys.stderr)
             print("\n--- Generated Assembly ---", file=sys.stderr)
             print(asm_code, file=sys.stderr)
             print("--------------------------", file=sys.stderr)
@@ -348,87 +383,70 @@ def cmd_compile(args):
         sys.exit(1)
 
 
-def print_stats(ir_program):
-    total_blocks = 0
-    total_instructions = 0
-    instruction_counts = {}
-
-    for func_name, func in ir_program.functions.items():
-        for block in func.blocks:
-            total_blocks += 1
-            for instr in block.instructions:
-                total_instructions += 1
-                instr_type = instr.instruction_type.name
-                instruction_counts[instr_type] = instruction_counts.get(instr_type, 0) + 1
-
-    print(f"\n=== IR Statistics ===", file=sys.stderr)
-    print(f"Functions: {len(ir_program.functions)}", file=sys.stderr)
-    print(f"Basic Blocks: {total_blocks}", file=sys.stderr)
-    print(f"Total Instructions: {total_instructions}", file=sys.stderr)
-    print(f"\nInstructions by type:", file=sys.stderr)
-    for instr_type, count in sorted(instruction_counts.items()):
-        print(f"  {instr_type}: {count}", file=sys.stderr)
-
+# ========================
+# CLI SETUP
+# ========================
 
 def main():
     parser = argparse.ArgumentParser(
-        prog='minicompiler',
+        prog='mycc',
         description='MiniCompiler - A simple compiler for educational purposes'
     )
 
+    # ГЛОБАЛЬНЫЕ ФЛАГИ (доступны для всех команд)
+    parser.add_argument('--version', action='version', version='mycc 1.0.0 (Sprint 8)')
+    parser.add_argument('-O', '--optimize', action='store_true',
+                        help='Enable IR optimizations (constant folding, DCE, peephole)')
+    parser.add_argument('-S', '--asm-only', action='store_true', help='Generate assembly only (default behavior)')
+    parser.add_argument('-v', '--verbose', action='store_true', help='Show verbose output during compilation')
+
     subparsers = parser.add_subparsers(dest='command', help='Available commands')
 
+    # LEX
     lex_parser = subparsers.add_parser('lex', help='Run lexical analysis')
     lex_parser.add_argument('--input', '-i', required=True, help='Input source file')
     lex_parser.add_argument('--output', '-o', help='Output file (default: stdout)')
     lex_parser.set_defaults(func=cmd_lex)
 
+    # PARSE
     parse_parser = subparsers.add_parser('parse', help='Run parsing and generate AST')
     parse_parser.add_argument('--input', '-i', required=True, help='Input source file')
     parse_parser.add_argument('--output', '-o', help='Output file (default: stdout)')
-    parse_parser.add_argument(
-        '--ast-format', '-f',
-        choices=['text', 'dot', 'json'],
-        default='text',
-        help='AST output format (default: text)'
-    )
-    parse_parser.add_argument('--verbose', '-v', action='store_true', help='Show verbose parsing information')
+    parse_parser.add_argument('--ast-format', '-f', choices=['text', 'dot', 'json'], default='text',
+                              help='AST output format')
     parse_parser.set_defaults(func=cmd_parse)
 
+    # CHECK
     check_parser = subparsers.add_parser('check', help='Run semantic analysis')
     check_parser.add_argument('--input', '-i', required=True, help='Input source file')
     check_parser.add_argument('--output', '-o', help='Output file (default: stdout)')
     check_parser.add_argument('--show-types', '-t', action='store_true', help='Show type-annotated AST')
     check_parser.add_argument('--symbols-only', '-s', action='store_true', help='Show only symbol table')
-    check_parser.add_argument('--format', choices=['text', 'json'], default='text',
-                              help='Output format for symbols (default: text)')
-    check_parser.add_argument('--verbose', '-v', action='store_true', help='Show verbose analysis information')
+    check_parser.add_argument('--format', choices=['text', 'json'], default='text', help='Output format for symbols')
     check_parser.set_defaults(func=cmd_check)
 
+    # SYMBOLS
     symbols_parser = subparsers.add_parser('symbols', help='Dump symbol table')
     symbols_parser.add_argument('--input', '-i', required=True, help='Input source file')
     symbols_parser.add_argument('--output', '-o', help='Output file (default: stdout)')
-    symbols_parser.add_argument('--format', '-f', choices=['text', 'json'], default='text',
-                                help='Output format (default: text)')
+    symbols_parser.add_argument('--format', '-f', choices=['text', 'json'], default='text', help='Output format')
     symbols_parser.set_defaults(func=cmd_symbols)
 
+    # IR
     ir_parser = subparsers.add_parser('ir', help='Generate Intermediate Representation')
     ir_parser.add_argument('--input', '-i', required=True, help='Input source file')
     ir_parser.add_argument('--output', '-o', help='Output file (default: stdout)')
-    ir_parser.add_argument('--format', '-f', choices=['text', 'dot', 'json'], default='text',
-                           help='IR output format (default: text)')
+    ir_parser.add_argument('--format', '-f', choices=['text', 'dot', 'json'], default='text', help='IR output format')
     ir_parser.add_argument('--no-comments', action='store_true', help='Hide comments in output')
     ir_parser.add_argument('--pretty', action='store_true', help='Pretty print JSON output')
     ir_parser.add_argument('--stats', action='store_true', help='Show IR statistics')
-    ir_parser.add_argument('--verbose', '-v', action='store_true', help='Show verbose generation information')
     ir_parser.set_defaults(func=cmd_ir)
 
+    # COMPILE
     compile_parser = subparsers.add_parser('compile', help='Compile source to x86-64 assembly')
     compile_parser.add_argument('--input', '-i', required=True, help='Input source file')
     compile_parser.add_argument('--output', '-o', help='Output assembly file (default: <input>.asm)')
-    compile_parser.add_argument('--verbose', '-v', action='store_true', help='Print generated assembly')
-    compile_parser.add_argument('--optimize', '-O', action='store_true',
-                                help='Enable IR optimizations')  # ✅ Теперь после создания
+    # -v и -O теперь глобальные, дублирование удалено
     compile_parser.set_defaults(func=cmd_compile)
 
     args = parser.parse_args()
